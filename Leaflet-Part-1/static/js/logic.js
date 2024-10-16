@@ -103,7 +103,7 @@ function createFeatures(earthquakeData) {
         div.innerHTML +=
           '<i class="circle" style="background:' + colors[i] + '"></i> ' +
           (depths[i] === 0 ? 'Less than ' + depths[i + 1] : 
-            (depths[i + 1] ? depths[i] + ' - ' + depths[i + 1]: depths[i])) + 
+            (depths[i + 1] ? depths[i] + ' - ' + depths[i + 1]: 'Greater than ' + depths[i])) + 
           '<br>';
       };
       // Return the div we have created.
