@@ -90,6 +90,8 @@ function createFeatures(earthquakeData) {
       // Add the ID to the div element that will match #legend.
       // This is used in the CSS file to set the background and border of the legend.
       div.id = "legend";
+      div.innerHTML +=
+          '<b>Depth (km)</b><br>'
       
       // Loop through the depth intervals and create a colored square for each
       for (let i = 0; i < depths.length; i++) {

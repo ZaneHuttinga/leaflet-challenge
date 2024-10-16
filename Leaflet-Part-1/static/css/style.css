@@ -12,14 +12,15 @@ html {
 #legend {font-family: Arial, sans-serif;
   background: #fff;
   padding: 10px;
-  margin: 10px;
   border: 3px solid #000;
+  font-size: 16px;
+  margin: 10px;
 }
 
 #legend .circle {
   display: inline-block;
-  width: 18px;
-  height: 19px;
+  width: 12px;
+  height: 12px;
   border: 1px solid #000;
   border-radius: 50%;
   margin-right: 8px;
