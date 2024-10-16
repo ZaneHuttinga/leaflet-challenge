@@ -8,11 +8,12 @@ d3.json(queryUrl).then(function (data) {
   createFeatures(data.features);
 });
 
-// A function to determine the marker size based on the population
+// A function to determine the marker size based on the magnitude.
 function markerSize(magnitude) {
     return magnitude*20000;
   };
 
+// A function to determine the marker color based on the depth.
 function markerColor(coordinates) {
     const depth = coordinates[2];
     if (depth < 10) return "lime";
@@ -37,6 +38,7 @@ function createFeatures(earthquakeData) {
     // Run the onEachFeature function once for each piece of data in the array.
     let earthquakes = L.geoJSON(earthquakeData, {
       onEachFeature: onEachFeature,
+      // Creat the dots indicating the magnitude and depth.
       pointToLayer: function(feature, latlng) {
         return L.circle(latlng, {
           stroke: false,
@@ -49,10 +51,12 @@ function createFeatures(earthquakeData) {
       
     });
   
-    // Send our earthquakes layer to the createMap function/
+    // Send our earthquakes layer to the createMap function.
     createMap(earthquakes);
   };
-
+  
+  // Create the createMap function called by createFeatures above.
+  // This creates the actual map interface for the user.
   function createMap(earthquakes) {
 
     // Create the base layers.
@@ -79,9 +83,10 @@ function createFeatures(earthquakeData) {
       layers: [street, earthquakes]
     });
 
-    // Create a div for the legend
+    // Create a div for the legend.
     let legend = L.control({ position: 'bottomright'});
   
+    // Add create lists of depths and colors for use in for loop below.
     legend.onAdd = function() {
       let div = L.DomUtil.create('div', 'info legend');
       const depths = [0, 10, 30, 50, 70, 90];
@@ -93,7 +98,7 @@ function createFeatures(earthquakeData) {
       div.innerHTML +=
           '<b>Depth (km)</b><br>'
       
-      // Loop through the depth intervals and create a colored square for each
+      // Loop through the depth intervals and create a colored circle for each
       for (let i = 0; i < depths.length; i++) {
         div.innerHTML +=
           '<i class="circle" style="background:' + colors[i] + '"></i> ' +
@@ -101,17 +106,11 @@ function createFeatures(earthquakeData) {
             (depths[i + 1] ? depths[i] + ' - ' + depths[i + 1]: depths[i])) + 
           '<br>';
       };
-
-//      for (let i = 0; i < depths.length; i++) {
-//        div.innerHTML +=
-//          `<i class="bi bi-circle-fill" style="color:${colors[i]}"></i>` +
-//          depths[i] === 0 ? 'Less than ' + depths[i + 1] :
-//                (depths[i + 1] ? depths[i] + ' - ' + depths[i + 1] : depths[i])
-//        '<br>'
-//      };
+      // Return the div we have created.
       return div;
     };
 
+    // Add the legend to the map.
     legend.addTo(myMap);
   
     // Create a layer control.
